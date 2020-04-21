@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
@@ -7,15 +7,16 @@ import { Observable } from 'rxjs';
   templateUrl: './app.component.html',
   styleUrls: [ './app.component.css' ]
 })
-export class AppComponent  {
+export class AppComponent implements OnInit  {
   status$: Observable<any>
-  constructor(private _store: Store<any>) {
-    this.status$ = this._store.select('authentication')
-  }
+  constructor(private _store: Store<any>) {}
   loign() {
     this._store.dispatch({type: 'Login'})
   }
   logout() {
     this._store.dispatch({type: 'Logout'})
+  }
+  ngOnInit() {
+    this.status$ = this._store.select(state => state.authentication)
   }
 }
